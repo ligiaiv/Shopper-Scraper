@@ -5,15 +5,17 @@ from configparser import ConfigParser
 
 class DBConnector:
     def __init__(self):
-
+        #   Dictionary that maps python types to SQL types
         self.DATA_MAP = {    str: String,
-                        int:Integer,
-                        datetime:DateTime,
-                        date:Date,
-                        float: Float
+                            int:Integer,
+                            datetime:DateTime,
+                            date:Date,
+                            float: Float
                         }
+        #   Creates engine used to acess DB
         self.db_engine = create_engine(self.db_config_url(), echo = True)
 
+    #   Loads file with DB information and saves in a dict
     def config(self,filename='database.ini', section='postgresql'):
         parser = ConfigParser()
         parser.read(filename)
@@ -31,6 +33,7 @@ class DBConnector:
         return db
 
 
+    #   Using dictionary with DB info, creates url for connection
     def db_config_url(self):
 
         params = self.config()
@@ -38,23 +41,3 @@ class DBConnector:
         
         return config_url
         
-    def commit(self,meta):
-
-        meta.create_all(self.db_engine)
-
-
-    def create_tables(self,column_names, column_types):
-
-        column_types = list(map(self.DATA_MAP.get,column_types))
-        
-        meta = MetaData()
-
-        columns = [Column(col_name,col_type) for col_name,col_type in zip(column_names,column_types) ]
-        this_table = Table(
-                'items', meta, 
-                Column('id', Integer, primary_key = True), *columns)
-
-        self.commit(meta)
-
-    # if __name__ == '__main__':
-    #     create_tables()

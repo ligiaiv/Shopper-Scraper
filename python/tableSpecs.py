@@ -1,6 +1,7 @@
 from datetime import datetime,date
-# from numpy import dtype
-import pandas as pd
+#
+#   Table with types for DB
+#
 tableProducts = {
     'name' :str,
     'sku' :str,
