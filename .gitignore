@@ -1,0 +1,5 @@
+Shopper_files/
+*.pdf*
+__pycache__/
+database.ini
+bearer*
