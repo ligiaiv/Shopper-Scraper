@@ -3,3 +3,4 @@ Shopper_files/
 __pycache__/
 database.ini
 bearer*
+*.zip
